@@ -148,7 +148,7 @@ function manageBoard (reaction_orig) {
         // add msg origin info to content prop
         const msgLink = `https://discordapp.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.id}`
         const channelLink = (msg.channel.type.includes('THREAD')) ? `<#${msg.channel.parent.id}>/<#${msg.channel.id}>` : `<#${msg.channel.id}>`
-        data.content += `${data.content}\n\n→ [original message](${msgLink}) in ${channelLink}`
+        data.content += `\n\n→ [original message](${msgLink}) in ${channelLink}`
 
         // resolve any images
         if (msg.embeds.length) {
