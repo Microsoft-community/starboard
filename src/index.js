@@ -140,12 +140,15 @@ function manageBoard (reaction_orig) {
         // create content data
         const data = {
           content: (msg.content.length < 3920) ? msg.content : `${msg.content.substring(0, 3920)} **[ ... ]**`,
-          msgLink: `https://discordapp.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.id}`,
-          channelLink: (msg.channel.type.includes('THREAD')) ? `<#${msg.channel.parent.id}>/<#${msg.channel.id}>` : `<#${msg.channel.id}>`,
           avatarURL: `https://cdn.discordapp.com/avatars/${msg.author.id}${msg.author.avatar}.jpg`,
           imageURL: '',
           footer: `${reaction.count} ${settings.embedEmoji} (${msg.id})`
         }
+
+        // add msg origin info to content prop
+        const msgLink = `https://discordapp.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.id}`
+        const channelLink = (msg.channel.type.includes('THREAD')) ? `<#${msg.channel.parent.id}>/<#${msg.channel.id}>` : `<#${msg.channel.id}>`
+        data.content += `${data.content}\n\n→ [original message](${msgLink}) in ${channelLink}`
 
         // resolve any images
         if (msg.embeds.length) {
@@ -168,7 +171,7 @@ function manageBoard (reaction_orig) {
         const embed = new Discord.MessageEmbed()
           .setAuthor(msg.author.username, data.avatarURL)
           .setColor(settings.hexcolor)
-          .setDescription(`${data.content}\n\n→ [original message](${data.msgLink}) in ${data.channelLink}`)
+          .setDescription(data.content)
           .setImage(data.imageURL)
           .setTimestamp(new Date())
           .setFooter(data.footer)
