@@ -88,7 +88,6 @@ async function loadIntoMemory () {
 function manageBoard (reaction_orig) {
 
   const msg = reaction_orig.message
-  const msgLink = `https://discordapp.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.id}`
   const postChannel = client.guilds.cache.get(guildID).channels.cache.get(smugboardID)
 
   msg.channel.messages.fetch(msg.id).then((msg) => {
@@ -140,8 +139,10 @@ function manageBoard (reaction_orig) {
 
         // create content data
         const data = {
-          content: `${msg.content}\n\n→ [original message](${msgLink}) in <#${msg.channel.id}>`,
-          avatarURL: `https://cdn.discordapp.com/avatars/${msg.author.id}/${msg.author.avatar}.jpg`,
+          content: (msg.content.length < 3920) ? msg.content : `${msg.content.substring(0, 3920)} **[ ... ]**`,
+          msgLink: `https://discordapp.com/channels/${msg.guild.id}/${msg.channel.id}/${msg.id}`,
+          channelLink: (msg.channel.type.includes('THREAD')) ? `<#${msg.channel.parent.id}>/<#${msg.channel.id}>` : `<#${msg.channel.id}>`,
+          avatarURL: `https://cdn.discordapp.com/avatars/${msg.author.id}${msg.author.avatar}.jpg`,
           imageURL: '',
           footer: `${reaction.count} ${settings.embedEmoji} (${msg.id})`
         }
@@ -167,7 +168,7 @@ function manageBoard (reaction_orig) {
         const embed = new Discord.MessageEmbed()
           .setAuthor(msg.author.username, data.avatarURL)
           .setColor(settings.hexcolor)
-          .setDescription(data.content)
+          .setDescription(`${data.content}\n\n→ [original message](${data.msgLink}) in ${data.channelLink}`)
           .setImage(data.imageURL)
           .setTimestamp(new Date())
           .setFooter(data.footer)
