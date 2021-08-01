@@ -140,7 +140,7 @@ function manageBoard (reaction_orig) {
         // create content data
         const data = {
           content: (msg.content.length < 3920) ? msg.content : `${msg.content.substring(0, 3920)} **[ ... ]**`,
-          avatarURL: `https://cdn.discordapp.com/avatars/${msg.author.id}${msg.author.avatar}.jpg`,
+          avatarURL: `https://cdn.discordapp.com/avatars/${msg.author.id}/${msg.author.avatar}.jpg`,
           imageURL: '',
           footer: `${reaction.count} ${settings.embedEmoji} (${msg.id})`
         }
