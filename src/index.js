@@ -163,9 +163,9 @@ function manageBoard (reaction_orig) {
             data.content += `\n⬇️ [download clip](${videoEmbed.thumbnail.url.replace("-social-preview.jpg", ".mp4")})`
           }
 
-        } else if (msg.attachments.array().length) {
-          data.imageURL = msg.attachments.array()[0].url
-          data.content += `\n📎 [${msg.attachments.array()[0].name}](${msg.attachments.array()[0].proxyURL})`
+        } else if (msg.attachments.size != 0) {
+          data.imageURL = msg.attachments.first().url
+          data.content += `\n📎 [${msg.attachments.first().name}](${msg.attachments.first().proxyURL})`
         }
 
         const embed = new Discord.MessageEmbed()
@@ -222,7 +222,7 @@ client.on('messageReactionAdd', (reaction_orig, user) => {
   // if reaction is not desired emoji
   if (reaction_orig.emoji.name !== settings.reactionEmoji) return
   // if user is webhook (eri waz here)
-  if (reaction_orig.message.webhookID !== null) return
+  if (reaction_orig.message.webhookId !== null) return
 
   manageBoard(reaction_orig)
 })
