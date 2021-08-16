@@ -210,7 +210,7 @@ client.on('messageReactionAdd', async (reaction) => {
   // if reaction is not desired emoji
   if (reaction.emoji.name !== settings.reactionEmoji) return
   // if user is webhook (eri waz here)
-  if (reaction_orig.message.webhookID !== null) return
+  if (reaction.message.webhookID !== null) return
 
   // refetch the message to tempfix djs ReactionManager bug
   try {
