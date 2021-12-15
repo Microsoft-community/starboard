@@ -222,6 +222,8 @@ client.on('messageReactionAdd', (reaction) => {
   if (reaction.message.channel.id == smugboardID) return
   // if reaction is not desired emoji
   if (reaction.emoji.name !== settings.reactionEmoji) return
+  // if user is webhook (eri waz here)
+  if (reaction.message.webhookId !== null) return
 
   // check if partial
   fetchStructure(reaction).then((reaction) => {
