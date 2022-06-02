@@ -221,7 +221,7 @@ client.on('messageReactionAdd', (reaction) => {
   // if channel is posting channel
   if (reaction.message.channel.id == smugboardID) return
   // if reaction is not desired emoji
-  if (reaction.emoji.name.toLowercase() !== settings.reactionEmoji.toLowerCase()) return
+  if (reaction.emoji.name.toLowerCase() !== settings.reactionEmoji.toLowerCase()) return
   // if user is webhook (eri waz here)
   if (reaction.message.webhookId !== null) return
 
