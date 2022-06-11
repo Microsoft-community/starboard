@@ -219,7 +219,7 @@ client.on('ready', () => {
 })
 
 // ON REACTION ADD
-client.on('messageReactionAdd', (reaction) => {
+client.on('messageReactionAdd', (reaction, user) => {
   if (loading) return
   // if channel is posting channel
   if (reaction.message.channel.id == smugboardID) return
@@ -230,6 +230,11 @@ client.on('messageReactionAdd', (reaction) => {
 
   // check if partial
   fetchStructure(reaction).then((reaction) => {
+    // if user is selfstarring
+    if (reaction.message.author.id === user.id) {
+      reaction.users.remove(user.id)
+      return
+    }
     manageBoard(reaction)
   }).catch((error) => {
     console.error(`error fetching reaction:\n${error}`)
